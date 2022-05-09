@@ -1,8 +1,6 @@
-import { entersState, joinVoiceChannel, VoiceConnectionStatus } from "@discordjs/voice";
+import { createAudioPlayer, createAudioResource, entersState, joinVoiceChannel, VoiceConnectionStatus } from "@discordjs/voice";
 import fs from "fs";
-
-
-// const client = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
+import ytdl from "ytdl-core";
 
 const queue = [];
 
@@ -25,21 +23,46 @@ export default async function play(message) {
         url: songInfo.videoDetails.video_url,
     }
 
+    console.log(song);
 
     try {
-        await entersState(connection, VoiceConnectionStatus.Ready, 30e3);
-        // if (!queue) {
-
-        // } else {
-        //     queue.push(song);
-        //     console.log(queue.songs);
-        //     message.reply(`${song.title} has beed added to the queue!`);
-        //     ytdl(song.url)
-        //         .pipe(fs.createWriteStream(''))
-        // }
-        return connection;
+        const stream = ytdl(songUrl[1], { filter: "audioonly" });
+        const player = createAudioPlayer();
+        const resource = createAudioResource(stream);
+        (async function play() {
+            await player.play(resource);
+            connection.subscribe(player);
+        })();
     } catch (err) {
         connection.destroy();
         throw err;
     }
+    // try {
+    //     await entersState(connection, VoiceConnectionStatus.Ready, 30e3)
+    //         .then(() => {
+    //             console.log("Joined voice channel!");
+
+    //             const player = createAudioPlayer();
+    //             const resource = createAudioResource();
+
+    //             const stream = ytdl(`${songUrl[1]}`, { filter: 'audioonly' });
+    //             async function play() {
+    //                 player.play(resource);
+    //                 connection.subscribe(player);
+    //             }
+    //         })
+    //     // if (!queue) {
+
+    //     // } else {
+    //     //     queue.push(song);
+    //     //     console.log(queue.songs);
+    //     //     message.reply(`${song.title} has beed added to the queue!`);
+    //     //     ytdl(song.url)
+    //     //         .pipe(fs.createWriteStream(''))
+    //     // }
+    //     return connection;
+    // } catch (err) {
+    //     connection.destroy();
+    //     throw err;
+    // }
 }
