@@ -4,7 +4,8 @@ import fs from "fs";
 dotenv.config();
 
 const client = new Client({
-    intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"]
+    intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"],
+    retryLimit: Infinity,
 });
 
 const commandPrefix = "!";

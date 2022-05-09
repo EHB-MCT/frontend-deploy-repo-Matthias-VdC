@@ -1,8 +1,9 @@
 import { createAudioPlayer, createAudioResource, entersState, joinVoiceChannel, VoiceConnectionStatus } from "@discordjs/voice";
-import fs from "fs";
 import ytdl from "ytdl-core";
 
 const queue = [];
+
+// helpful source: https://stackoverflow.com/questions/69028269/error-connection-play-is-not-a-function-in-discordjs-v13
 
 export default async function play(message) {
     if (message.member.voice.channel !== null) {
