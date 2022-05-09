@@ -22,16 +22,17 @@ export default async function play(message) {
         const song = {
             title: songInfo.videoDetails.title,
             url: songInfo.videoDetails.video_url,
+            author: songInfo.videoDetails.author.name,
         }
 
-        message.reply("Now playing: ");
+        message.reply(`Now playing: ${song.title} from ${song.author}`);
 
         console.log(song);
 
         const stream = ytdl(songUrl[1], { filter: "audioonly" });
         const player = createAudioPlayer();
-        const resource = createAudioResource(stream);
-        resource.volume.setVolume(0.5);
+        const resource = createAudioResource(stream, { inlineVolume: true });
+        resource.volume.setVolume(0.06);
         (async function play() {
             await player.play(resource);
             connection.subscribe(player);
