@@ -1,0 +1,11 @@
+{
+  "name": "test_bot",
+  "scripts": {
+    "dev": "NODE_ENV=dev node ."
+  },
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0"
+  },
+  "type": "module"
+}
