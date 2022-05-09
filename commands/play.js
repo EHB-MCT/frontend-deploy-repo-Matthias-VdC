@@ -5,16 +5,16 @@ import ytdl from "ytdl-core";
 const queue = [];
 
 export default async function play(message) {
-    try {
-        console.log("Joining voice channel!");
-        const connection = joinVoiceChannel({
-            channelId: message.member.voice.channelId,
-            guildId: message.member.guild.id,
-            selfDeaf: true,
-            selfMute: false,
-            adapterCreator: message.guild.voiceAdapterCreator,
-        });
+    console.log("Joining voice channel!");
+    const connection = joinVoiceChannel({
+        channelId: message.member.voice.channelId,
+        guildId: message.member.guild.id,
+        selfDeaf: true,
+        selfMute: false,
+        adapterCreator: message.guild.voiceAdapterCreator,
+    });
 
+    try {
         const songUrl = message.content.split(" ");
         console.log(songUrl);
         const songInfo = await ytdl.getInfo(songUrl[1]);
@@ -23,6 +23,8 @@ export default async function play(message) {
             title: songInfo.videoDetails.title,
             url: songInfo.videoDetails.video_url,
         }
+
+        message.reply("Now playing: ");
 
         console.log(song);
 
