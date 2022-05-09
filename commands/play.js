@@ -1,5 +1,6 @@
 import { createAudioPlayer, createAudioResource, entersState, joinVoiceChannel, VoiceConnectionStatus } from "@discordjs/voice";
 import ytdl from "ytdl-core";
+const { OpusEncoder } = require('@discordjs/opus');
 
 const queue = [];
 
