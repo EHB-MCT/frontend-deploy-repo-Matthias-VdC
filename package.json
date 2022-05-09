@@ -1,7 +1,7 @@
 {
   "name": "test_bot",
   "scripts": {
-    "start": "NODE_ENV=dev node ."
+    "start": "node index.js"
   },
   "dependencies": {
     "discord.js": "^13.6.0",
